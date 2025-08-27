@@ -2,21 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>📅 Countdown Dashboard</title>
+  <title>✈️ Vacation Countdown</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Countdown Dashboard</h1>
-    
-    <form id="eventForm">
-      <input type="text" id="eventName" placeholder="Event Name" required>
-      <input type="datetime-local" id="eventDate" required>
-      <button type="submit">Add Event</button>
-    </form>
+  <h1 class="glow">Vacation Countdown</h1>
 
-    <div id="countdownList"></div>
+  <div class="grid">
+    <!-- Person 1 -->
+    <div class="card">
+      <h2>Nivin Varkey</h2>
+      <p class="small">Last Duty: <span id="lastDuty1"></span></p>
+      <p class="big" id="flightCountdown1"></p>
+      <p class="return" id="returnCountdown1"></p>
+    </div>
+
+    <!-- Person 2 -->
+    <div class="card">
+      <h2>Test-01</h2>
+      <p class="small">Last Duty: <span id="lastDuty2"></span></p>
+      <p class="big" id="flightCountdown2"></p>
+      <p class="return" id="returnCountdown2"></p>
+    </div>
+
+    <!-- Person 3 -->
+    <div class="card">
+      <h2>Test-02</h2>
+      <p class="small">Last Duty: <span id="lastDuty3"></span></p>
+      <p class="big" id="flightCountdown3"></p>
+      <p class="return" id="returnCountdown3"></p>
+    </div>
   </div>
+
+  <!-- Plane Animation -->
+  <div class="plane">✈️</div>
+
+  <!-- Flightradar24 Embed -->
+  <h2 class="glow">Live Flight Tracking</h2>
+  <iframe src="https://www.flightradar24.com/simple_index.php?callsign=IGO1404"
+          width="100%" height="600" frameborder="0"></iframe>
 
   <script src="script.js"></script>
 </body>
