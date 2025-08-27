@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>✈️ Vacation Countdown</title>
 <style>
-  /* --- General --- */
   body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -179,7 +178,7 @@
         <p class="return" id="returnCountdown1"></p>
       </div>
       <div class="card-back flight-info">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/IndiGo_logo.svg" alt="Indigo Logo">
+        <img src="https://image.pngaaa.com/784/1906784-middle.png" alt="Indigo Logo">
         <p>Indigo 6E1404</p>
         <p>Status: On Time</p>
       </div>
@@ -196,7 +195,7 @@
         <p class="return" id="returnCountdown2"></p>
       </div>
       <div class="card-back flight-info">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Air_Arabia_Logo.svg" alt="Air Arabia Logo">
+        <img src="https://mir-s3-cdn-cf.behance.net/projects/404/4726765.54639f5e0f57b.png" alt="Air Arabia Logo">
         <p>Air Arabia 3L125</p>
         <p>Status: On Time</p>
       </div>
@@ -213,7 +212,7 @@
         <p class="return" id="returnCountdown3"></p>
       </div>
       <div class="card-back flight-info">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Air_Arabia_Logo.svg" alt="Air Arabia Logo">
+        <img src="https://mir-s3-cdn-cf.behance.net/projects/404/4726765.54639f5e0f57b.png" alt="Air Arabia Logo">
         <p>Air Arabia 3L125</p>
         <p>Status: On Time</p>
       </div>
@@ -263,10 +262,11 @@ function formatCountdownColor(targetDate) {
 
 function updateCountdowns() {
   people.forEach(p => {
-    // Last duty in grey
+    // Last duty fully grey
     let lastText = formatCountdownColor(p.lastDuty);
-    document.getElementById(p.ids.last).innerHTML = lastText ? lastText : "✅ Done";
-    document.getElementById(p.ids.last).style.color = "grey";
+    let lastElem = document.getElementById(p.ids.last);
+    lastElem.innerHTML = lastText ? lastText : "✅ Done";
+    lastElem.style.color = "grey"; // enforce grey
 
     // Flight countdown
     let flightText = formatCountdownColor(p.flight);
