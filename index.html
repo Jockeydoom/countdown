@@ -1,260 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>✈️ Vacation Countdown</title>
-  <style>
-    /* --- General --- */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: black;
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<title>✈️ Vacation Countdown</title>
+<style>
+  /* --- General --- */
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-    h1 {
-      margin-top: 20px;
-      font-size: 60px;
-      color: silver;
-      text-shadow: 0 0 15px gold, 0 0 30px gold, 0 0 60px gold;
-      animation: goldGlow 2s infinite alternate;
-    }
+  /* --- Background Video --- */
+  video.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.6;
+  }
 
-    @keyframes goldGlow {
-      from { text-shadow: 0 0 10px gold, 0 0 20px gold; }
-      to   { text-shadow: 0 0 30px gold, 0 0 60px gold; }
-    }
+  h1 {
+    margin-top: 20px;
+    font-size: 60px;
+    color: silver;
+    text-shadow: 0 0 15px gold, 0 0 30px gold, 0 0 60px gold;
+    animation: goldGlow 2s infinite alternate;
+  }
 
-    .grid {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
+  @keyframes goldGlow {
+    from { text-shadow: 0 0 10px gold, 0 0 20px gold; }
+    to   { text-shadow: 0 0 30px gold, 0 0 60px gold; }
+  }
 
-    .card {
-      background: rgba(20,20,20,0.9);
-      padding: 20px;
-      border-radius: 20px;
-      width: 300px;
-      perspective: 1000px;
-      box-shadow: 0 0 20px #0ff, inset 0 0 10px #0ff;
-      animation: flyIn 1s ease forwards;
-    }
+  .grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
 
-    @keyframes flyIn {
-      from { opacity: 0; transform: translateY(-50px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  .card {
+    background: rgba(20,20,20,0.8);
+    padding: 20px;
+    border-radius: 20px;
+    width: 300px;
+    perspective: 1000px;
+    box-shadow: 0 0 20px #0ff, inset 0 0 10px #0ff;
+    animation: flyIn 1s ease forwards;
+  }
 
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 220px;
-      transition: transform 1s;
-      transform-style: preserve-3d;
-      cursor: pointer;
-    }
+  @keyframes flyIn {
+    from { opacity: 0; transform: translateY(-50px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    .card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
 
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 20px;
-    }
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
 
-    .card-front {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+  }
 
-    .card-back {
-      transform: rotateY(180deg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: #111;
-      border-radius: 20px;
-    }
+  .card-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-    h2 {
-      margin: 0 0 15px;
-      font-size: 26px;
-      color: #ff0;
-      text-shadow: 0 0 10px #ff0, 0 0 20px #ff0;
-    }
+  .card-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    border-radius: 20px;
+  }
 
-    /* --- Last Duty --- */
-    .last-duty {
-      font-size: 16px;       /* smaller */
-      color: #aaa;           /* grey */
-      margin: 5px 0;
-    }
+  h2 {
+    margin: 0 0 15px;
+    font-size: 26px;
+    color: #ff0;
+    text-shadow: 0 0 10px #ff0, 0 0 20px #ff0;
+  }
 
-    /* --- Flight Countdown --- */
-    .flight-countdown {
-      font-size: 28px;
-      font-weight: bold;
-      color: #0ff;           /* cyan */
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-      animation: glowPulse 1.5s infinite alternate;
-      margin: 10px 0;
-    }
+  .last-duty {
+    font-size: 16px;
+    color: #aaa;
+    margin: 5px 0;
+  }
 
-    /* --- Return Countdown --- */
-    .return {
-      font-size: 20px;
-      margin-top: 10px;
-      color: #ff69b4;
-      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
-      animation: glowPulsePink 2s infinite alternate;
-    }
+  .countdown span {
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 0 0 5px #000;
+    margin: 0 2px;
+  }
 
-    .flight-info img {
-      width: 80px;
-      margin-bottom: 10px;
-    }
+  .month { color: cyan; }
+  .day   { color: blue; }
+  .hour  { color: yellow; }
+  .minute{ color: green; }
+  .second{ color: red; }
 
-    .flight-info p {
-      margin: 5px 0;
-      font-size: 18px;
-      color: #0ff;
-    }
+  .return {
+    font-size: 20px;
+    margin-top: 10px;
+    color: #ff69b4;
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    animation: glowPulsePink 2s infinite alternate;
+  }
 
-    /* Animations */
-    @keyframes glowPulse {
-      from { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
-      to   { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
-    }
+  .flight-info img {
+    width: 80px;
+    margin-bottom: 10px;
+  }
 
-    @keyframes glowPulsePink {
-      from { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
-      to   { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4; }
-    }
-  </style>
+  .flight-info p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: #0ff;
+  }
+
+  @keyframes glowPulsePink {
+    from { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+    to   { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4; }
+  }
+</style>
 </head>
 <body>
-  <h1>🌴 Vacation Countdown</h1>
 
-  <div class="grid">
-    <!-- Person 1 -->
-    <div class="card" onclick="this.classList.toggle('flipped')">
-      <div class="card-inner">
-        <div class="card-front">
-          <h2>Nivin Varkey</h2>
-          <p class="last-duty" id="lastDuty1"></p>
-          <p class="flight-countdown" id="flightCountdown1"></p>
-          <p class="return" id="returnCountdown1"></p>
-        </div>
-        <div class="card-back flight-info">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/IndiGo_Airlines_logo.svg" alt="Indigo Logo">
-          <p>Indigo 6E1404</p>
-          <p>Status: On Time</p>
-        </div>
+<!-- Background Video -->
+<video class="bg-video" autoplay muted loop>
+  <source src="https://www.videvo.net/videvo_files/converted/2016_05/preview/Flight_Airplanes_Videvo.mov" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+<h1>🌴 Vacation Countdown</h1>
+
+<div class="grid">
+  <!-- Person 1 -->
+  <div class="card" onclick="this.classList.toggle('flipped')">
+    <div class="card-inner">
+      <div class="card-front">
+        <h2>Nivin Varkey</h2>
+        <p class="last-duty" id="lastDuty1"></p>
+        <p class="countdown" id="flightCountdown1"></p>
+        <p class="return" id="returnCountdown1"></p>
       </div>
-    </div>
-
-    <!-- Person 2 -->
-    <div class="card" onclick="this.classList.toggle('flipped')">
-      <div class="card-inner">
-        <div class="card-front">
-          <h2>Sruthy K</h2>
-          <p class="last-duty" id="lastDuty2"></p>
-          <p class="flight-countdown" id="flightCountdown2"></p>
-          <p class="return" id="returnCountdown2"></p>
-        </div>
-        <div class="card-back flight-info">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Air_Arabia_logo.svg" alt="Air Arabia Logo">
-          <p>Air Arabia 3L125</p>
-          <p>Status: On Time</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Person 3 -->
-    <div class="card" onclick="this.classList.toggle('flipped')">
-      <div class="card-inner">
-        <div class="card-front">
-          <h2>Sruthy Raj</h2>
-          <p class="last-duty" id="lastDuty3"></p>
-          <p class="flight-countdown" id="flightCountdown3"></p>
-          <p class="return" id="returnCountdown3"></p>
-        </div>
-        <div class="card-back flight-info">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Air_Arabia_logo.svg" alt="Air Arabia Logo">
-          <p>Air Arabia 3L125</p>
-          <p>Status: On Time</p>
-        </div>
+      <div class="card-back flight-info">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/IndiGo_logo.svg" alt="Indigo Logo">
+        <p>Indigo 6E1404</p>
+        <p>Status: On Time</p>
       </div>
     </div>
   </div>
 
-  <script>
-    const people = [
-      {
-        lastDuty: "2025-08-29T17:00:00+04:00",
-        flight: "2025-08-30T13:40:00+04:00",
-        return: "2025-09-30T01:35:00+04:00",
-        ids: { last: "lastDuty1", flight: "flightCountdown1", ret: "returnCountdown1" }
-      },
-      {
-        lastDuty: "2025-10-03T17:00:00+04:00",
-        flight: "2025-10-04T15:35:00+04:00",
-        return: "2025-11-03T17:45:00+04:00",
-        ids: { last: "lastDuty2", flight: "flightCountdown2", ret: "returnCountdown2" }
-      },
-      {
-        lastDuty: "2025-10-31T17:00:00+04:00",
-        flight: "2025-11-01T15:35:00+04:00",
-        return: "2025-11-29T00:20:00+04:00",
-        ids: { last: "lastDuty3", flight: "flightCountdown3", ret: "returnCountdown3" }
-      }
-    ];
+  <!-- Person 2 -->
+  <div class="card" onclick="this.classList.toggle('flipped')">
+    <div class="card-inner">
+      <div class="card-front">
+        <h2>Sruthy K</h2>
+        <p class="last-duty" id="lastDuty2"></p>
+        <p class="countdown" id="flightCountdown2"></p>
+        <p class="return" id="returnCountdown2"></p>
+      </div>
+      <div class="card-back flight-info">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Air_Arabia_Logo.svg" alt="Air Arabia Logo">
+        <p>Air Arabia 3L125</p>
+        <p>Status: On Time</p>
+      </div>
+    </div>
+  </div>
 
-    function formatCountdown(targetDate) {
-      let now = new Date();
-      let diff = new Date(targetDate) - now;
-      if (diff <= 0) return null;
+  <!-- Person 3 -->
+  <div class="card" onclick="this.classList.toggle('flipped')">
+    <div class="card-inner">
+      <div class="card-front">
+        <h2>Sruthy Raj</h2>
+        <p class="last-duty" id="lastDuty3"></p>
+        <p class="countdown" id="flightCountdown3"></p>
+        <p class="return" id="returnCountdown3"></p>
+      </div>
+      <div class="card-back flight-info">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Air_Arabia_Logo.svg" alt="Air Arabia Logo">
+        <p>Air Arabia 3L125</p>
+        <p>Status: On Time</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-      let months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-      let d = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-      let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      let s = Math.floor((diff % (1000 * 60)) / 1000);
+<script>
+const people = [
+  {
+    lastDuty: "2025-08-29T17:00:00+04:00",
+    flight: "2025-08-30T13:40:00+04:00",
+    return: "2025-09-30T01:35:00+04:00",
+    ids: { last: "lastDuty1", flight: "flightCountdown1", ret: "returnCountdown1" }
+  },
+  {
+    lastDuty: "2025-10-03T17:00:00+04:00",
+    flight: "2025-10-04T15:35:00+04:00",
+    return: "2025-11-03T17:45:00+04:00",
+    ids: { last: "lastDuty2", flight: "flightCountdown2", ret: "returnCountdown2" }
+  },
+  {
+    lastDuty: "2025-10-31T17:00:00+04:00",
+    flight: "2025-11-01T15:35:00+04:00",
+    return: "2025-11-29T00:20:00+04:00",
+    ids: { last: "lastDuty3", flight: "flightCountdown3", ret: "returnCountdown3" }
+  }
+];
 
-      return `${months}m ${d}d ${h}h ${m}m ${s}s`;
+function formatCountdownColor(targetDate) {
+  let now = new Date();
+  let diff = new Date(targetDate) - now;
+  if(diff <= 0) return null;
+
+  let months = Math.floor(diff / (1000*60*60*24*30));
+  let days = Math.floor((diff % (1000*60*60*24*30)) / (1000*60*60*24));
+  let hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  let minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+  let seconds = Math.floor((diff % (1000*60)) / 1000);
+
+  return `<span class="month">${months}m</span> 
+          <span class="day">${days}d</span> 
+          <span class="hour">${hours}h</span> 
+          <span class="minute">${minutes}m</span> 
+          <span class="second">${seconds}s</span>`;
+}
+
+function updateCountdowns() {
+  people.forEach(p => {
+    let lastText = formatCountdownColor(p.lastDuty);
+    document.getElementById(p.ids.last).innerHTML = lastText ? lastText : "✅ Done";
+
+    let flightText = formatCountdownColor(p.flight);
+    if(flightText){
+      document.getElementById(p.ids.flight).innerHTML = flightText;
+      document.getElementById(p.ids.ret).textContent = "";
+    } else {
+      let returnText = formatCountdownColor(p.return);
+      document.getElementById(p.ids.flight).textContent = "✈️ Flight Time!";
+      document.getElementById(p.ids.ret).innerHTML = returnText ? returnText : "😢 Back to Duty";
     }
+  });
+}
 
-    function updateCountdowns() {
-      people.forEach(p => {
-        let lastText = formatCountdown(p.lastDuty);
-        document.getElementById(p.ids.last).textContent = lastText ? lastText : "✅ Done";
+setInterval(updateCountdowns, 1000);
+updateCountdowns();
+</script>
 
-        let flightText = formatCountdown(p.flight);
-        if (flightText) {
-          document.getElementById(p.ids.flight).textContent = flightText;
-          document.getElementById(p.ids.ret).textContent = "";
-        } else {
-          let returnText = formatCountdown(p.return);
-          document.getElementById(p.ids.flight).textContent = "✈️ Flight Time!";
-          document.getElementById(p.ids.ret).textContent = returnText ? returnText : "😢 Back to Duty";
-        }
-      });
-    }
-
-    setInterval(updateCountdowns, 1000);
-    updateCountdowns();
-  </script>
 </body>
 </html>
