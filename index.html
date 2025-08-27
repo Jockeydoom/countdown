@@ -95,15 +95,24 @@
       text-shadow: 0 0 10px #ff0, 0 0 20px #ff0;
     }
 
-    .big {
-      font-size: 28px;
-      font-weight: bold;
-      margin: 10px 0;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-      animation: glowPulse 1.5s infinite alternate;
+    /* --- Last Duty --- */
+    .last-duty {
+      font-size: 16px;       /* smaller */
+      color: #aaa;           /* grey */
+      margin: 5px 0;
     }
 
+    /* --- Flight Countdown --- */
+    .flight-countdown {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0ff;           /* cyan */
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+      animation: glowPulse 1.5s infinite alternate;
+      margin: 10px 0;
+    }
+
+    /* --- Return Countdown --- */
     .return {
       font-size: 20px;
       margin-top: 10px;
@@ -144,8 +153,8 @@
       <div class="card-inner">
         <div class="card-front">
           <h2>Nivin Varkey</h2>
-          <p class="big" id="lastDuty1"></p>
-          <p class="big" id="flightCountdown1"></p>
+          <p class="last-duty" id="lastDuty1"></p>
+          <p class="flight-countdown" id="flightCountdown1"></p>
           <p class="return" id="returnCountdown1"></p>
         </div>
         <div class="card-back flight-info">
@@ -161,8 +170,8 @@
       <div class="card-inner">
         <div class="card-front">
           <h2>Sruthy K</h2>
-          <p class="big" id="lastDuty2"></p>
-          <p class="big" id="flightCountdown2"></p>
+          <p class="last-duty" id="lastDuty2"></p>
+          <p class="flight-countdown" id="flightCountdown2"></p>
           <p class="return" id="returnCountdown2"></p>
         </div>
         <div class="card-back flight-info">
@@ -178,8 +187,8 @@
       <div class="card-inner">
         <div class="card-front">
           <h2>Sruthy Raj</h2>
-          <p class="big" id="lastDuty3"></p>
-          <p class="big" id="flightCountdown3"></p>
+          <p class="last-duty" id="lastDuty3"></p>
+          <p class="flight-countdown" id="flightCountdown3"></p>
           <p class="return" id="returnCountdown3"></p>
         </div>
         <div class="card-back flight-info">
@@ -192,7 +201,6 @@
   </div>
 
   <script>
-    // Countdown data
     const people = [
       {
         lastDuty: "2025-08-29T17:00:00+04:00",
@@ -235,12 +243,12 @@
 
         let flightText = formatCountdown(p.flight);
         if (flightText) {
-          document.getElementById(p.ids.flight).textContent = "Flight in: " + flightText;
+          document.getElementById(p.ids.flight).textContent = flightText;
           document.getElementById(p.ids.ret).textContent = "";
         } else {
           let returnText = formatCountdown(p.return);
           document.getElementById(p.ids.flight).textContent = "✈️ Flight Time!";
-          document.getElementById(p.ids.ret).textContent = returnText ? "Return in: " + returnText : "😢 Back to Duty";
+          document.getElementById(p.ids.ret).textContent = returnText ? returnText : "😢 Back to Duty";
         }
       });
     }
