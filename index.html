@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>✈️ Vacation Countdown</title>
   <style>
-    /* --- General --- */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -14,97 +13,98 @@
       overflow-x: hidden;
     }
 
+    /* Main Title */
     h1 {
-      margin-top: 20px;
-      font-size: 40px;
+      margin-top: 30px;
+      font-size: 60px;
       color: #0ff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-      animation: glowPulse 2s infinite alternate;
+      text-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+      animation: flyIn 1.5s ease forwards, glowPulse 2s infinite alternate;
+      opacity: 0;
     }
 
     .grid {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
+      gap: 40px;
+      margin-top: 50px;
       flex-wrap: wrap;
     }
 
     .card {
       background: rgba(20,20,20,0.9);
-      padding: 20px;
-      border-radius: 20px;
-      width: 280px;
-      box-shadow: 0 0 20px #0ff, inset 0 0 10px #0ff;
-      animation: fadeIn 2s ease forwards;
+      padding: 30px;
+      border-radius: 25px;
+      width: 350px;
+      box-shadow: 0 0 30px #0ff, inset 0 0 20px #0ff;
+      animation: flyIn 2s ease forwards;
+      opacity: 0;
       transition: transform 0.3s;
     }
 
     .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px #0ff, 0 0 50px #0ff;
+      transform: scale(1.07);
+      box-shadow: 0 0 50px #0ff, 0 0 70px #0ff;
     }
 
     h2 {
-      margin: 0 0 15px;
-      font-size: 22px;
+      margin: 0 0 20px;
+      font-size: 30px;
       color: #ff0;
-      text-shadow: 0 0 10px #ff0, 0 0 20px #ff0;
+      text-shadow: 0 0 20px #ff0, 0 0 40px #ff0;
     }
 
     .small {
-      font-size: 16px;
-      color: #aaa;
-      margin-bottom: 10px;
+      font-size: 20px;
+      color: #ccc;
+      margin-bottom: 15px;
     }
 
-    .big {
-      font-size: 30px;
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .unit {
+      font-size: 40px;
       font-weight: bold;
-      margin: 10px 0;
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+      padding: 10px 15px;
+      border-radius: 15px;
       animation: glowPulse 1.5s infinite alternate;
     }
 
+    /* Different colors for each time unit */
+    .months { color: #0ff; text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+    .days   { color: #ff0; text-shadow: 0 0 20px #ff0, 0 0 40px #ff0; }
+    .hours  { color: #f0f; text-shadow: 0 0 20px #f0f, 0 0 40px #f0f; }
+    .mins   { color: #0f0; text-shadow: 0 0 20px #0f0, 0 0 40px #0f0; }
+    .secs   { color: #f00; text-shadow: 0 0 20px #f00, 0 0 40px #f00; }
+
     .return {
-      font-size: 20px;
-      margin-top: 10px;
+      font-size: 26px;
+      margin-top: 15px;
       color: #ff69b4;
-      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4;
       animation: glowPulsePink 2s infinite alternate;
     }
 
-    /* Plane Animation */
-    .plane {
-      position: fixed;
-      top: 80px;
-      left: -100px;
-      font-size: 50px;
-      animation: fly 20s linear infinite;
-      text-shadow: 0 0 20px #fff, 0 0 40px #0ff;
-    }
-
     /* Animations */
-    @keyframes fly {
-      0%   { left: -100px; top: 80px; }
-      50%  { left: 50%; top: 120px; transform: rotate(10deg);}
-      100% { left: 110%; top: 80px; transform: rotate(0deg);}
-    }
-
     @keyframes glowPulse {
-      from { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
-      to   { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+      from { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+      to   { text-shadow: 0 0 20px currentColor, 0 0 50px currentColor; }
     }
 
     @keyframes glowPulsePink {
       from { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
-      to   { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4; }
+      to   { text-shadow: 0 0 20px #ff69b4, 0 0 50px #ff69b4; }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes flyIn {
+      from { transform: translateY(-100px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
@@ -115,8 +115,8 @@
     <!-- Person 1 -->
     <div class="card">
       <h2>Nivin Varkey</h2>
-      <p class="small"><span id="lastDuty1"></span></p>
-      <p class="big" id="flightCountdown1"></p>
+      <p class="small">Last Duty: <span id="lastDuty1"></span></p>
+      <div class="countdown" id="flightCountdown1"></div>
       <p class="return" id="returnCountdown1"></p>
     </div>
 
@@ -124,7 +124,7 @@
     <div class="card">
       <h2>Sruthy K</h2>
       <p class="small">Last Duty: <span id="lastDuty2"></span></p>
-      <p class="big" id="flightCountdown2"></p>
+      <div class="countdown" id="flightCountdown2"></div>
       <p class="return" id="returnCountdown2"></p>
     </div>
 
@@ -132,16 +132,12 @@
     <div class="card">
       <h2>Sruthy Raj</h2>
       <p class="small">Last Duty: <span id="lastDuty3"></span></p>
-      <p class="big" id="flightCountdown3"></p>
+      <div class="countdown" id="flightCountdown3"></div>
       <p class="return" id="returnCountdown3"></p>
     </div>
   </div>
 
-  <!-- Flying Plane -->
-  <div class="plane">✈️</div>
-
   <script>
-    // Countdown data
     const people = [
       {
         lastDuty: "2025-08-29T17:00:00+04:00",
@@ -166,39 +162,57 @@
     function formatCountdown(targetDate) {
       let now = new Date();
       let diff = new Date(targetDate) - now;
-
       if (diff <= 0) return null;
 
-      let d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      let s = Math.floor((diff % (1000 * 60)) / 1000);
+      let months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30)); // rough months
+      let days   = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000*60*60*24));
+      let hours  = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      let mins   = Math.floor((diff % (1000*60*60)) / (1000*60));
+      let secs   = Math.floor((diff % (1000*60)) / 1000);
 
-      return `${d}d ${h}h ${m}m ${s}s`;
+      return { months, days, hours, mins, secs };
+    }
+
+    function renderCountdown(elemId, time) {
+      const elem = document.getElementById(elemId);
+      if (!time) { elem.textContent = ""; return; }
+      elem.innerHTML = `
+        <div class="unit months">${time.months}M</div>
+        <div class="unit days">${time.days}D</div>
+        <div class="unit hours">${time.hours}H</div>
+        <div class="unit mins">${time.mins}M</div>
+        <div class="unit secs">${time.secs}S</div>
+      `;
     }
 
     function updateCountdowns() {
       people.forEach(p => {
         // Last Duty
         let lastText = formatCountdown(p.lastDuty);
-        document.getElementById(p.ids.last).textContent = lastText ? lastText : "✅ Duty Done";
+        document.getElementById(p.ids.last).textContent = lastText ? 
+          `${lastText.days}D ${lastText.hours}H ${lastText.mins}M` : "✅ Duty Done";
 
-        // Flight countdown
-        let flightText = formatCountdown(p.flight);
-        if (flightText) {
-          document.getElementById(p.ids.flight).textContent = "Flight in: " + flightText;
+        // Flight
+        let flightTime = formatCountdown(p.flight);
+        if (flightTime) {
+          renderCountdown(p.ids.flight, flightTime);
           document.getElementById(p.ids.ret).textContent = "";
         } else {
           // Switch to return countdown
-          let returnText = formatCountdown(p.return);
-          document.getElementById(p.ids.flight).textContent = "✈️ Flight Time!";
-          document.getElementById(p.ids.ret).textContent = returnText ? "Return in: " + returnText : "😢 Back to Duty";
+          let returnTime = formatCountdown(p.return);
+          document.getElementById(p.ids.flight).innerHTML = `<div class="unit">✈️ Flight Time!</div>`;
+          if (returnTime) {
+            document.getElementById(p.ids.ret).textContent = 
+              `Return in: ${returnTime.days}D ${returnTime.hours}H ${returnTime.mins}M`;
+          } else {
+            document.getElementById(p.ids.ret).textContent = "😢 Back to Duty";
+          }
         }
       });
     }
 
     setInterval(updateCountdowns, 1000);
-    updateCountdowns(); // initial call
+    updateCountdowns();
   </script>
 </body>
 </html>
